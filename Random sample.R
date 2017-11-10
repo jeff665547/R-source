@@ -11,16 +11,16 @@ for(i in 1:1){
   allresultdata = list()
   u = 0
   readfile = function(){
-    path <<- readline(prompt = "½Ð¿é¤J¦W³æªºÀÉ®×¸ô®|(e.g. C:/Users/.../file.csv): ")
+    path <<- readline(prompt = "è«‹è¼¸å…¥åå–®çš„æª”æ¡ˆè·¯å¾‘(e.g. C:/Users/.../file.csv): ")
     All <<- read.csv(path, header = TRUE)
     #Datasetup
     population = list()
     Biggroupname = c()
-    group = levels(All$²Õ§O)
+    group = levels(All$çµ„åˆ¥)
     for(i in 1: length(group)){
       if (gsub(" ", "", group[i], fixed = TRUE) != ""){
         Biggroupname = unique(c(Biggroupname, substr(group[i], 1, 1)))
-        population[[group[i]]] = All[which(All$²Õ§O == group[i]),]
+        population[[group[i]]] = All[which(All$çµ„åˆ¥ == group[i]),]
       }
     }
     Biggroup = list()
@@ -35,7 +35,7 @@ for(i in 1:1){
   
   #report selection function
   report = function(group = "A", n = 1){
-    enter = unique(unlist(strsplit(gsub(",", " ", readline(prompt = "¿é¤J³ø§iªº²Õ§O¤ÀÃþ(e.g. B): "), fixed = TRUE)," ")))
+    enter = unique(unlist(strsplit(gsub(",", " ", readline(prompt = "è¼¸å…¥å ±å‘Šçš„çµ„åˆ¥åˆ†é¡ž(e.g. B): "), fixed = TRUE)," ")))
     enter = enter[! enter %in% ""]
     AA = Biggroup[which(Biggroupname %in% as.character(enter))]
     base = c()
@@ -51,17 +51,17 @@ for(i in 1:1){
     for(i in 1:length(choose)){
       result = rbind(result, choose[[i]])
     }
-    cat("\n\n", paste(enter,collapse = ","), "¤j²Õªº³ø§i©¯¹B¨à:\n\n" )
+    cat("\n\n", paste(enter,collapse = ","), "å¤§çµ„çš„å ±å‘Šå¹¸é‹å…’:\n\n" )
     u <<- u + 1
-    name <<- paste(paste0("#",u, collapse = ""), paste(enter,collapse = ","), "¤j²Õªº³ø§i©¯¹B¨à" )
+    name <<- paste(paste0("#",u, collapse = ""), paste(enter,collapse = ","), "å¤§çµ„çš„å ±å‘Šå¹¸é‹å…’" )
     allresultdata[[name]] <<- result
-    return(result[,c("²Õ§O","¾Ç¸¹","©m¦W")])
+    return(result[,c("çµ„åˆ¥","å­¸è™Ÿ","å§“å")])
   }
   
   
   #ask selection function
   ask = function(group = "A, B", n = 10){
-    enter = unique(unlist(strsplit(gsub(",", " ", readline(prompt = "¿é¤J°Ý°ÝÃDªº²Õ§O¤ÀÃþ(e.g. C, D): "), fixed = TRUE)," ")))
+    enter = unique(unlist(strsplit(gsub(",", " ", readline(prompt = "è¼¸å…¥å•å•é¡Œçš„çµ„åˆ¥åˆ†é¡ž(e.g. C, D): "), fixed = TRUE)," ")))
     enter = enter[! enter %in% ""]
     AA = Biggroup[which(Biggroupname %in% as.character(enter))]
     base = c()
@@ -72,21 +72,21 @@ for(i in 1:1){
     }
     base = base[(sample(1:nrow(base), nrow(base), replace = FALSE)),]
     choose = base[sample(1:nrow(base), 10, replace = FALSE),]
-    choose = choose[order(choose$²Õ§O),]
-    cat("\n\n", paste(enter,collapse = ","), "¤j²Õ°Ý°ÝÃDªº©¯¹B¨à:\n\n")
+    choose = choose[order(choose$çµ„åˆ¥),]
+    cat("\n\n", paste(enter,collapse = ","), "å¤§çµ„å•å•é¡Œçš„å¹¸é‹å…’:\n\n")
     u <<- u + 1
-    name <<- paste(paste0("#",u, collapse = ""), paste(enter,collapse = ","), "¤j²Õ°Ý°ÝÃDªº©¯¹B¨à" )
+    name <<- paste(paste0("#",u, collapse = ""), paste(enter,collapse = ","), "å¤§çµ„å•å•é¡Œçš„å¹¸é‹å…’" )
     allresultdata[[name]] <<- choose
-    return(choose[,c("²Õ§O","¾Ç¸¹","©m¦W")])
+    return(choose[,c("çµ„åˆ¥","å­¸è™Ÿ","å§“å")])
   }
   
   
   #allresult function
   allresults = function(){
-    print(lapply(allresultdata,'[', c("²Õ§O","¾Ç¸¹","©m¦W")))
-    if(readline(prompt = "¬O§_­nÀx¦s©âÅÒµ²ªG?[Y/N]:") == "Y"){
-      wd <<- readline(prompt = "½Ð¿é¤JÀÉ®×¦s©ñªº¸ê®Æ§¨¸ô®|(e.g. C:/Users/.../foldername):")
-      filename <<- readline(prompt = "½Ð¿é¤JÀÉ®×¦WºÙ:")
+    print(lapply(allresultdata,'[', c("çµ„åˆ¥","å­¸è™Ÿ","å§“å")))
+    if(readline(prompt = "æ˜¯å¦è¦å„²å­˜æŠ½ç±¤çµæžœ?[Y/N]:") == "Y"){
+      wd <<- readline(prompt = "è«‹è¼¸å…¥æª”æ¡ˆå­˜æ”¾çš„è³‡æ–™å¤¾è·¯å¾‘(e.g. C:/Users/.../foldername):")
+      filename <<- readline(prompt = "è«‹è¼¸å…¥æª”æ¡ˆåç¨±:")
       setwd(wd)
       for(i in 1:length(allresultdata)){
         if(i == 1){
@@ -97,34 +97,21 @@ for(i in 1:1){
                      sheetName = names(allresultdata)[i], append=TRUE, row.names=FALSE)
         }
       }
-      cat("\n",paste("¤w±Nµ²ªG¦s¦Ü:",paste0(wd, paste0("/",filename,".xlsx"))),"\n")
+      cat("\n",paste("å·²å°‡çµæžœå­˜è‡³:",paste0(wd, paste0("/",filename,".xlsx"))),"\n")
     }
   }
   
   cat("\n Ready!!\n")
-  cat("\n ½Ð«ö·Ó¤U¦C«ü¥Ü¥H¤Î½d¨Ò®æ¦¡¶×¤J¦W³æ¸ê®Æ\n")
+  cat("\n è«‹æŒ‰ç…§ä¸‹åˆ—æŒ‡ç¤ºä»¥åŠç¯„ä¾‹æ ¼å¼åŒ¯å…¥åå–®è³‡æ–™\n")
   readfile()
-  cat("\n ­«·s¶×¤J¦W³æ¸ê®Æ½Ðª½±µ¦b©R¥O¦C¿é¤Jreadfile()\n")
-  cat(" ©â³ø§iªº¤H½Ðª½±µ¦b©R¥O¦C¿é¤Jreport()\n")
-  cat(" ©â°Ý°ÝÃDªº¤H½Ðª½±µ¦b©R¥O¦C¿é¤Jask()\n")
-  cat(" ¬d¬Ý©ÎÀx¦s©âÅÒµ²ªG¾ú¥v¬ö¿ý½Ðª½±µ¦b©R¥O¦C¿é¤Jallresults()\n")
-  cat("\n ¿é¤J«ü¥O«á½Ð«ö·Ó«ü¥Ü¥H¤Î½d¨ÒÄ~Äò¶i¦æ©âÅÒ!!\n")
-  cat("\n ª`·N:¿é¤Jªº²Õ§O¥u¯à¬O¥H¤j²Õ¬°³æ¦ìe.g. A, B, C, D\n")
-  cat(" ª`·N:¿é¤J¨â²Õ¥H¤Wªº²Õ§O½Ð¥HªÅ®æ©Î³r¸¹¹j¶}\n")
+  cat("\n é‡æ–°åŒ¯å…¥åå–®è³‡æ–™è«‹ç›´æŽ¥åœ¨å‘½ä»¤åˆ—è¼¸å…¥readfile()\n")
+  cat(" æŠ½å ±å‘Šçš„äººè«‹ç›´æŽ¥åœ¨å‘½ä»¤åˆ—è¼¸å…¥report()\n")
+  cat(" æŠ½å•å•é¡Œçš„äººè«‹ç›´æŽ¥åœ¨å‘½ä»¤åˆ—è¼¸å…¥ask()\n")
+  cat(" æŸ¥çœ‹æˆ–å„²å­˜æŠ½ç±¤çµæžœæ­·å²ç´€éŒ„è«‹ç›´æŽ¥åœ¨å‘½ä»¤åˆ—è¼¸å…¥allresults()\n")
+  cat("\n è¼¸å…¥æŒ‡ä»¤å¾Œè«‹æŒ‰ç…§æŒ‡ç¤ºä»¥åŠç¯„ä¾‹ç¹¼çºŒé€²è¡ŒæŠ½ç±¤!!\n")
+  cat("\n æ³¨æ„:è¼¸å…¥çš„çµ„åˆ¥åªèƒ½æ˜¯ä»¥å¤§çµ„ç‚ºå–®ä½e.g. A, B, C, D\n")
+  cat(" æ³¨æ„:è¼¸å…¥å…©çµ„ä»¥ä¸Šçš„çµ„åˆ¥è«‹ä»¥ç©ºæ ¼æˆ–é€—è™Ÿéš”é–‹\n")
 
 }
 
-
-wb = createWorkbook()
-
-sheet = createSheet(wb, "Sheet 1")
-
-addDataFrame(dataframe1, sheet=sheet, startColumn=1, row.names=FALSE)
-addDataFrame(dataframe2, sheet=sheet, startColumn=10, row.names=FALSE)
-
-sheet = createSheet(wb, "Sheet 2")
-
-addDataFrame(dataframe3, sheet=sheet, startColumn=1, row.names=FALSE)
-
-saveWorkbook(wb, "My_File.xlsx")
 
