@@ -82,6 +82,7 @@ for(i in 1:1){
       for(i in 1:1){
         tryCatch({
           library(xlsx)
+          library(rJava)
         }, warning = function(w) {
           print(w)
         }, error = function(e) {
@@ -130,3 +131,4 @@ for(i in 1:1){
   cat(" 注意:輸入兩組以上的組別請以空格或逗號隔開\n")
 
 }
+
