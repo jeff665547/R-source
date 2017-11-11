@@ -125,18 +125,17 @@ for(i in 1:1){
         wd <<- readline(prompt = "請輸入檔案存放的資料夾路徑(e.g. C:/Users/.../foldername):")
         filename <<- readline(prompt = "請輸入檔案名稱:")
         setwd(wd)
-      }
-      
-      for(i in 1:length(allresultdata)){
-        if(i == 1){
-          write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
-                     sheetName = names(allresultdata)[i], row.names=FALSE)
-        }else{
-          write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
-                     sheetName = names(allresultdata)[i], append=TRUE, row.names=FALSE)
+        for(i in 1:length(allresultdata)){
+          if(i == 1){
+            write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
+                       sheetName = names(allresultdata)[i], row.names=FALSE)
+          }else{
+            write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
+                       sheetName = names(allresultdata)[i], append=TRUE, row.names=FALSE)
+          }
         }
+        cat("\n",paste("已將結果存至:",paste0(wd, paste0("\\",filename,".xlsx"))),"\n")
       }
-      cat("\n",paste("已將結果存至:",paste0(wd, paste0("\\",filename,".xlsx"))),"\n")
     }
   }
   
