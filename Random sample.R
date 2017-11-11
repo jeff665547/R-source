@@ -1,13 +1,6 @@
 install.packages("xlsx")
 
 for(i in 1:1){
-  #Download Java : https://www.java.com/en/download/manual.jsp
-  if(Sys.getenv("R_ARCH") == "/x64"){
-    Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151') #for 64-bit R
-  }else{
-    Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151') #for 32-bit R
-  }
-  require("xlsx")
   allresultdata = list()
   u = 0
   readfile = function(){
@@ -84,10 +77,35 @@ for(i in 1:1){
   #allresult function
   allresults = function(){
     print(lapply(allresultdata,'[', c("組別","學號","姓名")))
+    Sys.sleep(2)
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
       wd <<- readline(prompt = "請輸入檔案存放的資料夾路徑(e.g. C:/Users/.../foldername):")
       filename <<- readline(prompt = "請輸入檔案名稱:")
       setwd(wd)
+      
+      for(i in 1:1){
+        tryCatch({
+          library(xlsx)
+        }, warning = function(w) {
+          print(w)
+        }, error = function(e) {
+          if(Sys.getenv("R_ARCH") == "/x64"){
+            Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
+            cat("Please download or update your JAVA from the website: \n")
+            cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf\n")
+          }else{
+            Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
+            cat("Please download or update your JAVA from the website: \n")
+            cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
+          }
+          break
+        })
+        oldw = getOption("warn")
+        options(warn = -1)
+        library(xlsx, warn.conflicts = FALSE, quietly = TRUE)
+        options(warn = oldw)
+      }
+      
       for(i in 1:length(allresultdata)){
         if(i == 1){
           write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
@@ -113,18 +131,4 @@ for(i in 1:1){
   cat(" 注意:輸入兩組以上的組別請以空格或逗號隔開\n")
 
 }
-
-
-wb = createWorkbook()
-
-sheet = createSheet(wb, "Sheet 1")
-
-addDataFrame(dataframe1, sheet=sheet, startColumn=1, row.names=FALSE)
-addDataFrame(dataframe2, sheet=sheet, startColumn=10, row.names=FALSE)
-
-sheet = createSheet(wb, "Sheet 2")
-
-addDataFrame(dataframe3, sheet=sheet, startColumn=1, row.names=FALSE)
-
-saveWorkbook(wb, "My_File.xlsx")
 
