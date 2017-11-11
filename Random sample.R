@@ -84,8 +84,11 @@ for(i in 1:1){
           library(rJava)
         }, warning = function(w) {
           tryCatch({
+            oldw = getOption("warn")
+            options(warn = -1)
             file = system.file("tests", "test_import.xlsx", package = "xlsx")
             res = read.xlsx(file, 1)
+            options(warn = oldw)
           }, warning = function(w){
             flag <<- 1
           }, error = function(e){
