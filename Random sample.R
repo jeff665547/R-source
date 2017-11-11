@@ -81,10 +81,25 @@ for(i in 1:1){
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
       for(i in 1:1){
         tryCatch({
-          library(xlsx)
           library(rJava)
         }, warning = function(w) {
-          print(w)
+          tryCatch({
+            file = system.file("tests", "test_import.xlsx", package = "xlsx")
+            res = read.xlsx(file, 1)
+          }, warning = function(w){
+            flag <<- 1
+          }, error = function(e){
+            if(Sys.getenv("R_ARCH") == "/x64"){
+              Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
+              cat("Please download or update your JAVA from the website: \n")
+              cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf\n")
+            }else{
+              Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
+              cat("Please download or update your JAVA from the website: \n")
+              cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
+            }
+            flag <<- TRUE
+          })
         }, error = function(e) {
           if(Sys.getenv("R_ARCH") == "/x64"){
             Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
@@ -95,8 +110,11 @@ for(i in 1:1){
             cat("Please download or update your JAVA from the website: \n")
             cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
           }
-          break
+          flag <<- TRUE
         })
+        if(flag){
+          break
+        }
         oldw = getOption("warn")
         options(warn = -1)
         library(xlsx)
