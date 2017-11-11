@@ -77,7 +77,7 @@ for(i in 1:1){
   #allresult function
   allresults = function(){
     print(lapply(allresultdata,'[', c("組別","學號","姓名")))
-    Sys.sleep(2)
+    Sys.sleep(1)
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
       for(i in 1:1){
         tryCatch({
