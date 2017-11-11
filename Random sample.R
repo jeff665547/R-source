@@ -81,7 +81,7 @@ for(i in 1:1){
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
       for(i in 1:1){
         tryCatch({
-          library(rJava)
+          library(xlsx)
         }, warning = function(w) {
           tryCatch({
             oldw = getOption("warn")
@@ -96,10 +96,12 @@ for(i in 1:1){
               Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
               cat("Please download or update your JAVA from the website: \n")
               cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf\n")
+              cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
             }else{
               Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
               cat("Please download or update your JAVA from the website: \n")
               cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
+              cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
             }
             flag <<- TRUE
           })
@@ -108,11 +110,12 @@ for(i in 1:1){
             Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
             cat("Please download or update your JAVA from the website: \n")
             cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf\n")
+            cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
           }else{
             Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
             cat("Please download or update your JAVA from the website: \n")
             cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
-          }
+          } cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
           flag <<- TRUE
         })
         if(flag){
