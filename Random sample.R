@@ -81,7 +81,7 @@ for(i in 1:1){
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
       oldw = getOption("warn")
       options(warn = -1)
-      library(xlsx)
+      library(xlsx, warn.conflicts = FALSE, quietly = TRUE)
       options(warn = oldw)
       for(i in 1:1){
         flag <<- FALSE
@@ -108,10 +108,6 @@ for(i in 1:1){
         if(flag){
           break
         }
-        oldw = getOption("warn")
-        options(warn = -1)
-        library(xlsx)
-        options(warn = oldw)
         wd <<- readline(prompt = "請輸入檔案存放的資料夾路徑(e.g. C:/Users/.../foldername):")
         filename <<- readline(prompt = "請輸入檔案名稱:")
         setwd(wd)
