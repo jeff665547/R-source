@@ -79,19 +79,12 @@ for(i in 1:1){
     print(lapply(allresultdata,'[', c("組別","學號","姓名")))
     Sys.sleep(1)
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
-      oldw = getOption("warn")
+      oldw <<- getOption("warn")
       options(warn = -1)
-      library(xlsx, warn.conflicts = FALSE, quietly = TRUE)
+      X <<- tryCatch(library(xlsx, warn.conflicts = FALSE, quietly = TRUE), error = c)
       options(warn = oldw)
-      for(i in 1:1){
-        flag <<- FALSE
-        tryCatch({
-          oldw = getOption("warn")
-          options(warn = -1)
-          file = system.file("tests", "test_import.xlsx", package = "xlsx")
-          res = read.xlsx(file, 1)
-          options(warn = oldw)
-        }, error = function(e) {
+      if(class(X) == "list"){
+        if(X$message == "package 'rJava' could not be loaded"){
           if(Sys.getenv("R_ARCH") == "/x64"){
             Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
             cat("Please download or update your JAVA from the website: \n")
@@ -103,8 +96,17 @@ for(i in 1:1){
             cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
             cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
           }
-          flag <<- TRUE
-        })
+        }
+        flag <<- TRUE
+      }else{
+        oldw = getOption("warn")
+        options(warn = -1)
+        library(xlsx, warn.conflicts = FALSE, quietly = TRUE)
+        options(warn = oldw)
+        flag <<- FALSE
+      }
+      
+      for(i in 1:1){
         if(flag){
           break
         }
