@@ -84,6 +84,7 @@ for(i in 1:1){
       library(xlsx)
       options(warn = oldw)
       for(i in 1:1){
+        flag <<- FALSE
         tryCatch({
           oldw = getOption("warn")
           options(warn = -1)
