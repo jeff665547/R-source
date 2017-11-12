@@ -74,49 +74,37 @@ for(i in 1:1){
   }
   
   
-  #allresult function
+  #allresults function
+  
   allresults = function(){
     print(lapply(allresultdata,'[', c("組別","學號","姓名")))
     Sys.sleep(1)
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
-      oldw <<- getOption("warn")
-      options(warn = -1)
-      X <<- tryCatch(library(xlsx, warn.conflicts = FALSE, quietly = TRUE), error = c)
-      options(warn = oldw)
-      if(class(X) == "list"){
-        if(X$message == "package 'rJava' could not be loaded"){
-          if(Sys.getenv("R_ARCH") == "/x64"){
-            Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
-            cat("Please download or update your JAVA from the website: \n")
-            cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf\n")
-            cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
-          }else{
-            Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
-            cat("Please download or update your JAVA from the website: \n")
-            cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
-            cat("After finishing the installation, try \"allresults()\" in your command line again! \n")
-          }
-        }
-        flag <<- TRUE
+      if(Sys.getenv("R_ARCH") == "/x64"){
+        Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
+        cat("Please install or update your JAVA from the following website first: \n")
+        cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227552_e758a0de34e24606bca991d704f6dcbf\n")
+        invisible(readline(prompt = "After finishing the installation, press [enter] to continue.\n"))
       }else{
-        oldw = getOption("warn")
-        options(warn = -1)
-        library(xlsx, warn.conflicts = FALSE, quietly = TRUE)
-        options(warn = oldw)
-        flag <<- FALSE
+        Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
+        cat("Please install or update your JAVA from the following website first: \n")
+        cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
+        invisible(readline(prompt = "After finishing the installation, press [enter] to continue.\n"))
       }
       
+      oldw <<- getOption("warn")
+      options(warn = -1)
+      library(xlsx, warn.conflicts = FALSE, quietly = TRUE)
+      options(warn = oldw)
+      
       for(i in 1:1){
-        if(flag){
-          break
-        }
         wd <<- readline(prompt = "請輸入檔案存放的資料夾路徑(e.g. C:/Users/.../foldername):")
         filename <<- readline(prompt = "請輸入檔案名稱:")
         setwd(wd)
         for(i in 1:length(allresultdata)){
           if(i == 1){
             write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
-                       sheetName = names(allresultdata)[i], row.names=FALSE)
+                                sheetName = names(allresultdata)[i], row.names=FALSE)
           }else{
             write.xlsx(allresultdata[[i]], file = paste0(filename,".xlsx"), 
                        sheetName = names(allresultdata)[i], append=TRUE, row.names=FALSE)
@@ -139,4 +127,5 @@ for(i in 1:1){
   cat(" 注意:輸入兩組以上的組別請以空格或逗號隔開\n")
 
 }
+
 
