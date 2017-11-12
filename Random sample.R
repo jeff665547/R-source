@@ -78,7 +78,7 @@ for(i in 1:1){
   
   allresults = function(){
     print(lapply(allresultdata,'[', c("組別","學號","姓名")))
-    Sys.sleep(1)
+    Sys.sleep(0.4)
     if(readline(prompt = "是否要儲存抽籤結果?[Y/N]:") == "Y"){
       if(Sys.getenv("R_ARCH") == "/x64"){
         Sys.setenv(JAVA_HOME='C:\\Program Files\\Java\\jre1.8.0_151')
@@ -88,7 +88,7 @@ for(i in 1:1){
       }else{
         Sys.setenv(JAVA_HOME='C:\\Program Files (x86)\\Java\\jre1.8.0_151')
         cat("Please install or update your JAVA from the following website first: \n")
-        cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf")
+        cat("http://javadl.oracle.com/webapps/download/AutoDL?BundleId=227550_e758a0de34e24606bca991d704f6dcbf\n")
         invisible(readline(prompt = "After finishing the installation, press [enter] to continue.\n"))
       }
       
